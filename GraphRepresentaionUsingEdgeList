@@ -1,0 +1,55 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class GraphImpUsingEdgeList {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int vertices = Integer.parseInt(br.readLine());
+        int edges = Integer.parseInt((br.readLine()));
+        ArrayList<Edge> edgeList = new ArrayList<>();
+        while(edges>0) {
+            String[] input = br.readLine().split(" ");
+            int src = Integer.parseInt(input[0]);
+            int dst = Integer.parseInt(input[1]);
+            Edge p = new Edge(src,dst);
+            edgeList.add(p);
+            edges--;
+        }
+        HashMap<Integer,ArrayList<Integer>> graph = new HashMap<>();
+        createGraph(graph,edgeList);
+        representGraph(graph);
+    }
+    public static void createGraph(HashMap<Integer,ArrayList<Integer>> graph, ArrayList<Edge> edgeList) {
+        for(Edge edge:edgeList) {
+            int src=edge.src;
+            int dst=edge.dst;
+            if(!graph.containsKey(src)){
+                graph.put(src,new ArrayList<Integer>());
+            }
+            graph.get(src).add(dst);
+        }
+    }
+    public static void representGraph(HashMap<Integer,ArrayList<Integer>> graph) {
+        for(Map.Entry<Integer,ArrayList<Integer>> g:graph.entrySet()) {
+            int src=g.getKey();
+            ArrayList<Integer> dest = g.getValue();
+            System.out.print(src+"-> ");
+            for(int vertices:dest){
+                System.out.print(vertices+" ");
+            }
+            System.out.println();
+        }
+    }
+}
+class Edge{
+    int src;
+    int dst;
+    Edge(int src,int dst){
+        this.src=src;
+        this.dst=dst;
+    }
+}

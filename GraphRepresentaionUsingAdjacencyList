@@ -1,0 +1,40 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.*;
+
+public class GraphImpUsingAdjacencyList {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int vertices = Integer.parseInt(br.readLine());
+        int edges = Integer.parseInt((br.readLine()));
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for(int ini=0; ini <vertices; ini++) {
+            graph.add(new ArrayList<Integer>());
+        }
+        while(edges>0) {
+            String[] input = br.readLine().split(" ");
+            int src = Integer.parseInt(input[0]);
+            int dst = Integer.parseInt(input[1]);
+            addEdge(src, dst, graph);
+            edges--;
+        }
+        representGraph(graph);
+    }
+    public static void addEdge(int src,int dst,ArrayList<ArrayList<Integer>> graph) {
+        graph.get(src).add(dst);
+        graph.get(dst).add(src);
+    }
+    public static void representGraph(ArrayList<ArrayList<Integer>> graph) {
+        for(int s=0; s<graph.size(); s++){
+            System.out.print(s+" -> ");
+            ArrayList<Integer> destList = graph.get(s);
+            for(int d=0; d<destList.size(); d++){
+                int dest = destList.get(d);
+                System.out.print(dest+" ");
+            }
+            System.out.println();
+        }
+    }
+}
