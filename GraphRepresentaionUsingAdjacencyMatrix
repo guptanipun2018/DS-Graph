@@ -1,0 +1,33 @@
+    import java.io.BufferedReader;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+
+    public class GraphImpUsingAdjancenyMatrix {
+        public static void main(String[] args) throws IOException {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            int vertices = Integer.parseInt(br.readLine());
+            int edges = Integer.parseInt(br.readLine());
+            int graph[][] = new int[vertices][vertices];
+            while(edges>0) {
+                String input[] = br.readLine().split(" ");
+                int src=Integer.parseInt(input[0]);
+                int dst = Integer.parseInt(input[1]);
+                addEdge(src,dst,graph);
+                edges--;
+            }
+            representGraph(graph);
+        }
+        public static void addEdge(int src,int dst,int[][] graph) {
+            graph[src][dst]=1;
+            graph[dst][src]=1;
+        }
+        public static void representGraph(int graph[][]) {
+            int vertices = graph.length;
+            for(int src=0; src<vertices; src++) {
+                for(int dst=0; dst<vertices; dst++) {
+                    System.out.print(graph[src][dst]+" ");
+                }
+                System.out.println();
+            }
+        }
+    }
