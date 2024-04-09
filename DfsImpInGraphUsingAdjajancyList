@@ -1,0 +1,47 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class DfsImpInGraph {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int vertices = Integer.parseInt(br.readLine());
+        int edges = Integer.parseInt((br.readLine()));
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for(int ini=0; ini <vertices; ini++) {
+            graph.add(new ArrayList<Integer>());
+        }
+        while(edges>0) {
+            String[] input = br.readLine().split(" ");
+            int src = Integer.parseInt(input[0]);
+            int dst = Integer.parseInt(input[1]);
+            addEdge(src, dst, graph);
+            edges--;
+        }
+        boolean[] visited = new boolean[vertices];
+        Arrays.fill(visited,false);
+        int src=0;
+        ArrayList<Integer> output = new ArrayList<>();
+        dfs(graph,visited,src,output);
+        representGraph(output);
+    }
+
+    public static void dfs(ArrayList<ArrayList<Integer>> graph, boolean[] visited,int src,ArrayList<Integer> output){
+//        if(visited[src]) return;
+        visited[src]=true;
+        output.add(src);
+        ArrayList<Integer> currVertex = graph.get(src);
+        for(int i:currVertex){
+            if(!visited[i])dfs(graph,visited,i,output);
+        }
+    }
+    public static void addEdge(int src,int dst,ArrayList<ArrayList<Integer>> graph) {
+        graph.get(src).add(dst);
+        graph.get(dst).add(src);
+    }
+    public static void representGraph(ArrayList<Integer> output) {
+        for(int i:output) System.out.print(i+" ");
+    }
+}
